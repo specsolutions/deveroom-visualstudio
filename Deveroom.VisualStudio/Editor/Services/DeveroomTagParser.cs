@@ -114,11 +114,19 @@ namespace Deveroom.VisualStudio.Editor.Services
                             GetTextSpan(fileSnapshot, step.Location, step.Keyword),
                             step.Keyword));
 
-                    if (step.Argument is DataTable dataTable)
+                    if (step.Argument is DataTableHeader dataTableHeader)
                     {
                         stepTag.AddChild(
                             new DeveroomTag(DeveroomTagTypes.DataTable,
                                 GetBlockSpan(fileSnapshot, dataTable.Rows.First().Location,
+                                    dataTable.Rows.First().Location.Line),
+                                dataTable));
+                    }
+                    if (step.Argument is DataTable dataTable)
+                    {
+                        stepTag.AddChild(
+                            new DeveroomTag(DeveroomTagTypes.DataTable,
+                                GetBlockSpan(fileSnapshot, dataTable.Rows.ElementAt(1).Location,
                                     dataTable.Rows.Last().Location.Line),
                                 dataTable));
                     }
