@@ -117,10 +117,10 @@ namespace Deveroom.VisualStudio.Editor.Services
                     if (step.Argument is DataTableHeader dataTableHeader)
                     {
                         stepTag.AddChild(
-                            new DeveroomTag(DeveroomTagTypes.DataTable,
-                                GetBlockSpan(fileSnapshot, dataTable.Rows.First().Location,
-                                    dataTable.Rows.First().Location.Line),
-                                dataTable));
+                            new DeveroomTag(DeveroomTagTypes.DataTableHeader,
+                                GetBlockSpan(fileSnapshot, dataTableHeader.Rows.First().Location,
+                                    dataTableHeader.Rows.First().Location.Line),
+                                dataTableHeader));
                     }
                     if (step.Argument is DataTable dataTable)
                     {
