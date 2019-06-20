@@ -61,13 +61,6 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'd:\a\1\Nuget'
-    Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)\drop\NuGet'
-  condition: succeededOrFailed()
-
-- task: CopyFiles@2
-  inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: '**\bin\$(buildConfiguration)\**\*.vsix'
     TargetFolder: '$(build.artifactstagingdirectory)\vsix'
