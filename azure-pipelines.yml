@@ -20,6 +20,8 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: restore
+    feedsToUse: config
+    nugetConfigPath: NuGet.config
 
 - task: VSBuild@1
   displayName: 'Build Solution'
