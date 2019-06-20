@@ -33,6 +33,8 @@ namespace Deveroom.VisualStudio.SpecFlowConnector.Discovery
 
             var builder = new AssemblyLoadContextBuilder();
 
+            builder.TestHotFix();
+
             if (File.Exists(depsJsonFile))
             {
                 builder.AddDependencyContextWithCompileDeps(depsJsonFile);
