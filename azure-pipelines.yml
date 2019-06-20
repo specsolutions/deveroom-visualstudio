@@ -16,6 +16,9 @@ variables:
 steps:
 - task: NuGetToolInstaller@0
 
+- powershell: "(gc 'NuGet.config') -replace 'LocalNuGetFeed', '..\s\LocalNuGetFeed' | Out-File -Encoding UTF8 'NuGet.config'"
+  displayName: 'Fix NuGet.config'
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore (with NuGet.config)'
   inputs:
@@ -71,6 +74,13 @@ steps:
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)\drop'
+  condition: succeededOrFailed()
+ 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'd:\a\1\Nuget'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)\drop\NuGet'
   condition: succeededOrFailed()
 
 - task: PublishBuildArtifacts@1
