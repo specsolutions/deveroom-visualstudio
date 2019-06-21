@@ -8,9 +8,9 @@ namespace Deveroom.VisualStudio.SpecFlowConnector.Discovery
     {
         private readonly object _discovererObj;
 
-        public ReflectionSpecFlowDiscoverer(PluginLoader loadContext, Type discovererType)
+        public ReflectionSpecFlowDiscoverer(PluginLoader pluginLoader, Type discovererType)
         {
-            var discovererAssembly = loadContext.LoadAssemblyFromPath(discovererType.Assembly.Location);
+            var discovererAssembly = pluginLoader.LoadAssemblyFromPath(discovererType.Assembly.Location);
             var discovererRemoteType = discovererAssembly.GetType(discovererType.FullName);
             _discovererObj = Activator.CreateInstance(discovererRemoteType);
         }
