@@ -152,24 +152,24 @@ namespace Deveroom.VisualStudio.Specs.StepDefinitions
                 SourceLocation = @"X:\ProjectMock\CalculatorSteps.cs|12|5"
             };
 
-            tableRow.TryGetValue("tag", out var tag);
-            tableRow.TryGetValue("feature", out var feature);
-            tableRow.TryGetValue("scenario", out var scenario);
+            tableRow.TryGetValue("tag scope", out var tagScope);
+            tableRow.TryGetValue("feature scope", out var featureScope);
+            tableRow.TryGetValue("scenario scope", out var scenarioScope);
 
-            if (string.IsNullOrEmpty(tag))
-                tag = null;
-            if (string.IsNullOrEmpty(feature))
-                feature = null;
-            if (string.IsNullOrEmpty(scenario))
-                scenario = null;
+            if (string.IsNullOrEmpty(tagScope))
+                tagScope = null;
+            if (string.IsNullOrEmpty(featureScope))
+                featureScope = null;
+            if (string.IsNullOrEmpty(scenarioScope))
+                scenarioScope = null;
 
-            if (tag != null || feature != null || scenario != null)
+            if (tagScope != null || featureScope != null || scenarioScope != null)
             {
                 stepDefinition.Scope = new StepScope
                 {
-                    Tag = tag,
-                    FeatureTitle = feature,
-                    ScenarioTitle = scenario
+                    Tag = tagScope,
+                    FeatureTitle = featureScope,
+                    ScenarioTitle = scenarioScope
                 };
             }
 
@@ -417,7 +417,7 @@ namespace Deveroom.VisualStudio.Specs.StepDefinitions
             tags.Should().HaveCount(testTextSections.Length);
         }
 
-        [Then(@"no BindingError should be highlighted")]
+        [Then(@"no binding error should be highlighted")]
         public void ThenNoBindingErrorShouldBeHighlighted()
         {
             var tags = GetDeveroomTags(_wpfTextView).ToArray();
