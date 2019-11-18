@@ -140,12 +140,40 @@ namespace Deveroom.VisualStudio.Specs.StepDefinitions
         [Given(@"the following step definitions in the project:")]
         public void WhenANewStepDefinitionIsAddedToTheProjectAs(Table stepDefinitionTable)
         {
-            var stepDefinitions = stepDefinitionTable.CreateSet(() => new StepDefinition
+            var stepDefinitions = stepDefinitionTable.CreateSet(CreateStepDefinitionFromTableRow).ToArray();
+            RegisterStepDefinitions(stepDefinitions);
+        }
+
+        private StepDefinition CreateStepDefinitionFromTableRow(TableRow tableRow)
+        {
+            var stepDefinition = new StepDefinition
             {
                 Method = $"M{Guid.NewGuid():N}",
                 SourceLocation = @"X:\ProjectMock\CalculatorSteps.cs|12|5"
-            }).ToArray();
-            RegisterStepDefinitions(stepDefinitions);
+            };
+
+            tableRow.TryGetValue("tag", out var tag);
+            tableRow.TryGetValue("feature", out var feature);
+            tableRow.TryGetValue("scenario", out var scenario);
+
+            if (string.IsNullOrEmpty(tag))
+                tag = null;
+            if (string.IsNullOrEmpty(feature))
+                feature = null;
+            if (string.IsNullOrEmpty(scenario))
+                scenario = null;
+
+            if (tag != null || feature != null || scenario != null)
+            {
+                stepDefinition.Scope = new StepScope
+                {
+                    Tag = tag,
+                    FeatureTitle = feature,
+                    ScenarioTitle = scenario
+                };
+            }
+
+            return stepDefinition;
         }
 
         private void RegisterStepDefinitions(params StepDefinition[] stepDefinitions)
@@ -223,7 +251,7 @@ namespace Deveroom.VisualStudio.Specs.StepDefinitions
 
             _wpfTextView = StubWpfTextView.CreateTextView(_ideScope, new TestText(featureFileContent), projectScope: _projectScope);
         }
-
+        
         [Given(@"the initial binding discovery is performed")]
         [When(@"the initial binding discovery is performed")]
         [When(@"the binding discovery is performed")]
@@ -389,6 +417,13 @@ namespace Deveroom.VisualStudio.Specs.StepDefinitions
             tags.Should().HaveCount(testTextSections.Length);
         }
 
+        [Then(@"no BindingError should be highlighted")]
+        public void ThenNoBindingErrorShouldBeHighlighted()
+        {
+            var tags = GetDeveroomTags(_wpfTextView).ToArray();
+            tags.Should().NotContain(t => t.Type == "BindingError");
+        }
+        
         [Then(@"all (.*) section should be highlighted as")]
         public void ThenTheStepKeywordsShouldBeHighlightedAs(string keywordType, string expectedContent)
         {
