@@ -1,3 +1,11 @@
+# v1.6.3 - 2021-08-17
+
+Improvements:
+
+* Support for SpecFlow v3.8, v3.9 projects (Issue #72)
+* Do not log discovery output (Issue #71)
+* Support for projects referencing ASP.NET Core 3.1 framework elements
+
 # v1.6.2 - 2021-02-22
 
 Improvements:
