@@ -16,11 +16,12 @@ namespace Deveroom.VisualStudio.Connectors
             var deveroomConfiguration = projectScope.GetDeveroomConfiguration();
             var processorArchitecture = GetProcessorArchitecture(deveroomConfiguration, projectSettings);
             return new OutProcSpecFlowConnector(
-                deveroomConfiguration, 
-                ideScope.Logger, 
-                projectSettings.TargetFrameworkMoniker, 
+                deveroomConfiguration,
+                ideScope.Logger,
+                projectSettings.TargetFrameworkMoniker,
                 projectScope.IdeScope.GetExtensionFolder(),
-                processorArchitecture);
+                processorArchitecture,
+                projectSettings.SpecFlowVersion);
         }
 
         private static ProcessorArchitectureSetting GetProcessorArchitecture(DeveroomConfiguration deveroomConfiguration, ProjectSettings projectSettings)

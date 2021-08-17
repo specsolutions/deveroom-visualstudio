@@ -20,7 +20,7 @@ Rules:
 * Highlight Scenario Outline placeholders
 	* Highlights Scenario Outline placeholders
 
-
+@story:123
 Scenario: Highlights definition line keywords
 	Given there is a SpecFlow project scope
 	When the following feature file is opened in the editor
