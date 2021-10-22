@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Threading;
-using Deveroom.VisualStudio.Diagnostics;
 using Deveroom.VisualStudio.Diagonostics;
 using Deveroom.VisualStudio.Discovery;
 using Deveroom.VisualStudio.Monitoring;
@@ -140,9 +140,8 @@ namespace Deveroom.VisualStudio.ProjectSystem
             DeveroomErrorListServices = null;
         }
 
-        public IPersistentSpan CreatePersistentTrackingPosition(SourceLocation sourceLocation)
+        public void CalculateSourceLocationTrackingPositions(IEnumerable<SourceLocation> sourceLocations)
         {
-            return null;
         }
 
         public IProjectScope[] GetProjectsWithFeatureFiles()

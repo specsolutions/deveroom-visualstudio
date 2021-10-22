@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO.Abstractions;
-using System.Linq;
 using System.Threading;
-using Deveroom.VisualStudio.Diagnostics;
 using Deveroom.VisualStudio.Diagonostics;
 using Deveroom.VisualStudio.Discovery;
 using Deveroom.VisualStudio.Monitoring;
@@ -121,9 +120,9 @@ namespace Deveroom.VisualStudio.ProjectSystem
             remove => VsIdeScope.WeakProjectOutputsUpdated -= value;
         }
 
-        public IPersistentSpan CreatePersistentTrackingPosition(SourceLocation sourceLocation)
+        public void CalculateSourceLocationTrackingPositions(IEnumerable<SourceLocation> sourceLocations)
         {
-            return VsIdeScope.CreatePersistentTrackingPosition(sourceLocation);
+            VsIdeScope.CalculateSourceLocationTrackingPositions(sourceLocations);
         }
 
         public IProjectScope[] GetProjectsWithFeatureFiles()
