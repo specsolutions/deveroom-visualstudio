@@ -54,10 +54,8 @@ namespace Deveroom.VisualStudio
             }
         }
 
-        public static IWpfTextView GetWpfTextViewFromFilePath(string filePath, IServiceProvider serviceProvider)
+        public static IWpfTextView GetWpfTextViewFromFilePath(string filePath, IServiceProvider serviceProvider, IVsEditorAdaptersFactoryService editorAdaptersFactoryService)
         {
-            var editorAdaptersFactoryService = ResolveMefDependency<IVsEditorAdaptersFactoryService>(serviceProvider);
-
             if (VsShellUtilities.IsDocumentOpen(serviceProvider, filePath, Guid.Empty,
                 out var _, out var _, out var windowFrame))
             {

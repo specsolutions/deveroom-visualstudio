@@ -41,9 +41,8 @@ namespace Deveroom.VisualStudio.VsxStubs.ProjectSystem
         public event EventHandler<EventArgs> WeakProjectsBuilt;
         public event EventHandler<EventArgs> WeakProjectOutputsUpdated;
 
-        public IPersistentSpan CreatePersistentTrackingPosition(SourceLocation sourceLocation)
+        public void CalculateSourceLocationTrackingPositions(IEnumerable<SourceLocation> sourceLocations)
         {
-            return null;
         }
 
         public IProjectScope[] GetProjectsWithFeatureFiles()

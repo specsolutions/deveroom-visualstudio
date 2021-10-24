@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Abstractions;
 using Deveroom.VisualStudio.Diagonostics;
 using Deveroom.VisualStudio.Discovery;
@@ -22,7 +23,7 @@ namespace Deveroom.VisualStudio.ProjectSystem
         event EventHandler<EventArgs> WeakProjectsBuilt;
         event EventHandler<EventArgs> WeakProjectOutputsUpdated;
 
-        IPersistentSpan CreatePersistentTrackingPosition(SourceLocation sourceLocation);
+        void CalculateSourceLocationTrackingPositions(IEnumerable<SourceLocation> sourceLocations);
         IProjectScope[] GetProjectsWithFeatureFiles();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO.Abstractions;
 using System.Linq;
@@ -10,13 +11,13 @@ using Deveroom.VisualStudio.Diagonostics;
 using Deveroom.VisualStudio.Discovery;
 using Deveroom.VisualStudio.Monitoring;
 using Deveroom.VisualStudio.ProjectSystem.Actions;
-using Deveroom.VisualStudio.ProjectSystem.Settings;
-using Deveroom.VisualStudio.UI;
 using Deveroom.VisualStudio.VsEvents;
 using EnvDTE;
+using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Events;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using NuGet.VisualStudio;
 
 namespace Deveroom.VisualStudio.ProjectSystem
@@ -110,15 +111,38 @@ namespace Deveroom.VisualStudio.ProjectSystem
             MonitoringService.MonitorOpenProjectSystem(VsUtils.GetVsSemanticVersion(ServiceProvider), this);
         }
 
-        public IPersistentSpan CreatePersistentTrackingPosition(SourceLocation sourceLocation)
+        public void CalculateSourceLocationTrackingPositions(IEnumerable<SourceLocation> sourceLocations)
+        {
+            var editorAdaptersFactoryService = VsUtils.ResolveMefDependency<IVsEditorAdaptersFactoryService>(ServiceProvider);
+
+            var sourceLocationsByFile = sourceLocations
+                .Where(sl => sl.SourceLocationSpan == null)
+                .GroupBy(sl => sl.SourceFile);
+
+            int counter = 0;
+            foreach (var sourceLocationsForFile in sourceLocationsByFile)
+            {
+                var sourceFile = sourceLocationsForFile.Key;
+                var wpfTextView = VsUtils.GetWpfTextViewFromFilePath(sourceFile, ServiceProvider, editorAdaptersFactoryService);
+
+                foreach( var sourceLocation in sourceLocationsForFile)
+                {
+                    counter++;
+                    sourceLocation.SourceLocationSpan = this.CreatePersistentTrackingPosition(sourceLocation, wpfTextView);
+                }
+            }
+
+            Logger.LogVerbose($"{counter} tracking positions calculated");
+        }
+
+        private IPersistentSpan CreatePersistentTrackingPosition(SourceLocation sourceLocation, IWpfTextView wpfTextView)
         {
             var line0 = sourceLocation.SourceFileLine - 1;
             var lineOffset = sourceLocation.SourceFileColumn - 1;
             var endLine0 = sourceLocation.SourceFileEndLine - 1 ?? line0;
             var endLineOffset = sourceLocation.SourceFileEndColumn - 1 ?? lineOffset;
             try
-            {
-                var wpfTextView = VsUtils.GetWpfTextViewFromFilePath(sourceLocation.SourceFile, ServiceProvider);
+            {  
                 if (wpfTextView != null)
                     return _persistentSpanFactory.Create(wpfTextView.TextSnapshot, line0, lineOffset, endLine0, endLineOffset,
                         SpanTrackingMode.EdgeExclusive);
