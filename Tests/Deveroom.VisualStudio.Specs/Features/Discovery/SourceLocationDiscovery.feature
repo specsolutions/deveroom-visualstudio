@@ -27,7 +27,20 @@ Examples:
 	| V1    | net452        |
 	| V3    | netcoreapp3.1 |
 	| V5    | net5.0        |
+#@ignoreci
+#Examples: Old .NET Core
+#	| label | framework     |
+#	| V2    | netcoreapp2.1 |
+
 @ignoreci
+Scenario Outline: Discover binding source location from SpecFlow project with async bindings (Old .NET Core)
+	Given there is a small SpecFlow project with async bindings
+	And the project uses the new project format
+	And the target framework is <framework>
+	And the project is built
+	When the binding discovery performed
+	Then the discovery succeeds with several step definitions
+	And the step definitions contain source file and line
 Examples: Old .NET Core
 	| label | framework     |
 	| V2    | netcoreapp2.1 |
