@@ -27,7 +27,7 @@ Examples:
 Scenario Outline: Discover bindings from a SpecFlow project on .NET Core
 	Given there is a simple SpecFlow project for <version>
 	And the project uses the new project format
-	And the target framework is netcoreapp2.1
+	And the target framework is netcoreapp3.1
 	And the project is built
 	When the binding discovery performed
 	Then the discovery succeeds with several step definitions

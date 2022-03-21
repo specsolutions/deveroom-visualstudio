@@ -25,6 +25,9 @@ Scenario Outline: Discover binding source location from SpecFlow project with as
 Examples: 
 	| label | framework     |
 	| V1    | net452        |
-	| V2    | netcoreapp2.1 |
 	| V3    | netcoreapp3.1 |
 	| V5    | net5.0        |
+@ignoreci
+Examples: Old .NET Core
+	| label | framework     |
+	| V2    | netcoreapp2.1 |

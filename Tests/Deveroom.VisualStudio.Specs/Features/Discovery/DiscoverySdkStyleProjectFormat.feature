@@ -11,5 +11,5 @@ Scenario Outline: Discover bindings from SDK-style project format
 Examples: 
 	| label            | framework     | version |
 	| .NET new prj     | net461        | v3.*    |
-	| .NET Core        | netcoreapp2.1 | v3.*    |
+	| .NET Core        | netcoreapp3.1 | v3.*    |
 	| .NET SpecFlow v2 | net452        | v2.*    |
