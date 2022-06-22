@@ -11,7 +11,7 @@
     <PackageReference Include="Gherkin" Version="20.0.1" />
     <PackageReference Include="System.IO.Abstractions" Version="4.2.10" />
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 
     <PackageReference Include="Microsoft.VisualStudio.Text.Data" Version="15.6.27740" />
     <PackageReference Include="Microsoft.VisualStudio.Text.Logic" Version="15.6.27740" />
