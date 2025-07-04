@@ -1,3 +1,5 @@
+This repository is not maintained anymore, as I focus my efforts on Reqnroll (https://reqnroll.net) that is a replacement for SpecFlow.
+
 # Deveroom - a Visual Studio extension for SpecFlow
 
 Many BDD teams working on formulating scenarios aim to produce a real living documentation, in this activity a feature file editor can be a great help as it saves typing, time and energy.
